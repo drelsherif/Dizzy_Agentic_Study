@@ -64,7 +64,7 @@ The input Excel file must have columns: `ID`, `ED Arrival`, `First CTH Result`, 
 
 - **Pipeline code, prompts, schemas, QC logic, and analysis scripts:** Available in this repository (MIT license)
 - **Raw radiology report text and patient-identifiable data:** NOT available due to IRB data-governance restrictions
-- **Structured output dataset (719 cases) and human-review comparison (148 cases):** Available from corresponding author upon reasonable request, subject to Northwell Health IRB approval
+- **Structured output dataset (719 cases) and human-review comparison (150 cases):** Available from corresponding author upon reasonable request, subject to Northwell Health IRB approval
 
 ## Code Development Disclosure
 
