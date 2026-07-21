@@ -67,8 +67,11 @@ The pipeline extracts 22 structured clinical variables from stroke-workup neuroi
 | 2 | Moderate stenosis | 50-69% |
 | 3 | Severe stenosis | 70-99% |
 | 4 | Occlusion | 100% |
+| 9 | CTA not performed (sentinel value) | N/A — see below |
 
 **Key rule:** Grade 0 is assigned if any vessel has plaque or calcification but NO measurable luminal stenosis. Grading is based strictly on luminal stenosis, NOT plaque burden.
+
+**Grade 9 — "not performed" sentinel:** Grade 9 is reserved exclusively for cases where the CTA was never performed at all (all 7 vessel fields are deterministically set to 9 by the pipeline, not inferred by the LLM, with evidence text `"CTA not performed"`). It does **not** mean "vessel not mentioned in an otherwise-performed CTA report" — within a performed CTA, any vessel the LLM doesn't explicitly find stenosis for defaults to grade 0 (normal), per the "unmentioned = normal" policy adopted in v13.5.x. If the LLM ever returns a stray 9 for a vessel within a performed CTA (i.e., `cta_performed = True`), a deterministic QC layer force-corrects it to 0 and raises a `model returned grade 9 on a performed CTA; forced to 0` flag — this is what the "Grade-9 leakage" QC check in `prompt_templates_reference.md` detects. Grade 9 should therefore be treated as effectively a fourth, CTA-level "not applicable" category, not a stenosis severity value, and excluded from ordinal severity statistics.
 
 ---
 
@@ -158,10 +161,10 @@ The pipeline extracts 22 structured clinical variables from stroke-workup neuroi
 |--------|-------|
 | Parent cohort | 1,669 consecutive ED dizziness/vertigo patients |
 | Full imaging triad (CTH + CTA + MRI) | 719 cases |
-| Validation cohort (human review) | 148 unique cases |
+| Validation cohort (human review) | 150 unique cases |
 | Enrichment cases (rare findings) | 40 curated |
-| Random cases | 108 random |
-| Duplicate removed | 1 (Source ID 225) |
+| Random cases | 110 random |
+| Duplicate case excluded (both reviews) | 1 (Source ID 225) |
 
 ## Statistical Plan
 

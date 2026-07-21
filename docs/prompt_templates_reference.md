@@ -43,12 +43,14 @@ inside JSON string values.
 | 2 | Moderate stenosis (50-69%) |
 | 3 | Severe stenosis (70-99%) |
 | 4 | Occlusion (100%) |
+| 9 | Sentinel value — CTA not performed at all (set deterministically by the pipeline for all 7 vessel fields, never by the LLM) |
 
 **Key Decision Rules:**
 - Grade 0 if ANY vessel has plaque/calcification but NO measurable stenosis
 - Grade based strictly on luminal stenosis, NOT plaque burden
 - If stenosis percentage is not explicitly stated, infer from descriptors:
   "mild" → 1, "moderate" → 2, "severe" → 3, "occluded" → 4
+- Grade 9 is never requested from the LLM — it is applied by the pipeline only when the CTA was not performed at all. Within a *performed* CTA, a vessel the LLM doesn't mention defaults to grade 0 ("unmentioned = normal"), not 9. Any 9 the LLM returns for a performed CTA is a schema violation, force-corrected to 0 by the QC overlay and logged as a "Grade-9 leakage" flag.
 
 Also outputs:
 - `CTP_Performed`: "Yes" | "No"
