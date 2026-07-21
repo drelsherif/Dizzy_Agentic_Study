@@ -1,0 +1,14 @@
+CODE AVAILABILITY STATEMENT
+==========================
+
+The pipeline code (v13.5.2), prompt templates, JSON output schemas, quality-control
+overlay logic, and statistical analysis scripts are available at [GitHub repository URL]
+under an MIT license. Raw radiology report text and patient-identifiable data are not
+available due to IRB data-governance restrictions; the structured output dataset for the
+719-case cohort and the 148-case human-review comparison are available from the
+corresponding author upon reasonable request and subject to Northwell Health IRB approval.
+
+Pipeline development was conducted by the investigator with AI-assisted coding tools
+(Anthropic Claude, OpenAI ChatGPT) under direct clinical supervision. All clinical
+decision rules, output schemas, quality-control logic, and refinement criteria were
+specified by the investigator; the AI tools were used for code implementation only.
