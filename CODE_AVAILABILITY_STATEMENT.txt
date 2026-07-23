@@ -1,8 +1,9 @@
 CODE AVAILABILITY STATEMENT
 ==========================
 
-The pipeline code (v13.5.2), prompt templates, JSON output schemas, quality-control
-overlay logic, and statistical analysis scripts are available at [GitHub repository URL]
+The pipeline code (v14.0.3), prompt templates, JSON output schemas, quality-control
+overlay logic, statistical analysis scripts, and a synthetic test dataset with answer key
+are available at https://github.com/drelsherif/Dizzy_Agentic_Study
 under an MIT license. Raw radiology report text and patient-identifiable data are not
 available due to IRB data-governance restrictions; the structured output dataset for the
 719-case cohort and the 150-case human-review comparison are available from the

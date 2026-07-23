@@ -1,4 +1,4 @@
-# DizzyCTA Agentic Pipeline v13.5.2 — Code Repository
+# DizzyCTA Agentic Pipeline v14.0.3 — Code Repository
 
 **Study:** A Multi-Agent Large Language Model Pipeline for Structured Abstraction of Stroke-Workup Neuroimaging Reports: Design, Prevalence-Informed Validation, and Potential for Large-Scale Retrospective and Prospective Cohort Curation
 
@@ -8,19 +8,21 @@ yelsherif@northwell.edu
 
 ## Overview
 
-This repository contains the cleaned pipeline code, prompt templates, statistical analysis scripts, and documentation for the DizzyCTA Agentic Pipeline v13.5.2 — a four-agent sequential LLM pipeline that abstracts structured clinical variables from stroke-workup neuroimaging reports (CT head, CTA head/neck, CT perfusion, and MRI brain) across a 719-case retrospective cohort.
+This repository contains the cleaned pipeline code, prompt templates, statistical analysis scripts, and documentation for the DizzyCTA Agentic Pipeline v14.0.3 — a four-agent sequential LLM pipeline that abstracts structured clinical variables from stroke-workup neuroimaging reports (CT head, CTA head/neck, CT perfusion, and MRI brain) across a 719-case retrospective cohort.
 
-The pipeline was developed through 14 major versions (v1.0–v13.5.2) using a four-phase strategy: single-model disagreement-driven iteration, multi-model agreement optimization, frontier-model refinement, and prevalence-informed enrichment design.
+The pipeline was developed through 18 major versions (v1.0–v14.0.3) using a four-phase strategy: single-model disagreement-driven iteration, multi-model agreement optimization, frontier-model refinement, and prevalence-informed enrichment design. The statistics reported in the manuscript (three-way inter-model concordance, test–retest reproducibility, and n=150 human-vs-AI accuracy) were generated under v14.0.1; v14.0.2–v14.0.3 are subsequent bug fixes validated against the included synthetic test suite and confirmed to have zero impact on the real 719-case cohort results (see CHANGELOG in the pipeline file header).
 
 ## Repository Structure
 
 ```
 code_repository/
-├── agentic_radiology_pipeline_v13_5_2.py   # Main pipeline (cleaned, ~2000 lines)
+├── agentic_radiology_pipeline_v14_0_3.py   # Main pipeline (cleaned, ~2000 lines)
 ├── requirements.txt                        # Python dependencies
 ├── LICENSE                                  # MIT License
 ├── CODE_AVAILABILITY_STATEMENT.txt          # For manuscript
 ├── README.md                                # This file
+├── Dizzy_Sample_Input_SYNTHETIC.xlsx        # 15-case synthetic test set (no PHI, fictional dates)
+├── Dizzy_Sample_Expected_Scores.xlsx        # Answer key for the synthetic test set
 ├── analysis/                                # R statistical analysis scripts
 │   ├── wilson_ci.R                          # Wilson CI + sample size functions
 │   ├── cohen_kappa.R                        # Inter-model and human-AI kappa
@@ -55,14 +57,22 @@ source("analysis/run_all.R")
 
 ```python
 # Run the pipeline on an Excel file with radiology report columns
-python agentic_radiology_pipeline_v13_5_2.py --input reports.xlsx --output results.xlsx
+python agentic_radiology_pipeline_v14_0_3.py --input reports.xlsx --output results.xlsx
+
+# Test mode (first 10 rows only) is the default; add --full to process the entire file
+python agentic_radiology_pipeline_v14_0_3.py --input reports.xlsx --output results.xlsx --full
 ```
 
 The input Excel file must have columns: `ID`, `ED Arrival`, `First CTH Result`, `First CTAH Result`, `First CTAN Result`, `First MRB Result`.
 
+### Testing your setup
+
+`Dizzy_Sample_Input_SYNTHETIC.xlsx` contains 15 fully fictional cases (no PHI, dates shifted outside the real study period) covering the pipeline's main decision branches — run it first to confirm your environment and API credentials are working, and compare your output against `Dizzy_Sample_Expected_Scores.xlsx`.
+
 ## Data Availability
 
 - **Pipeline code, prompts, schemas, QC logic, and analysis scripts:** Available in this repository (MIT license)
+- **Synthetic test dataset and answer key:** Available in this repository (fully fictional, no PHI)
 - **Raw radiology report text and patient-identifiable data:** NOT available due to IRB data-governance restrictions
 - **Structured output dataset (719 cases) and human-review comparison (150 cases):** Available from corresponding author upon reasonable request, subject to Northwell Health IRB approval
 
